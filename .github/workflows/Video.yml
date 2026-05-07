@@ -19,3 +19,4 @@ jobs:
           echo "🚀 Starting sshx session for next 6 hours..."
           echo "Connect using the link that will appear below:"
           curl -sSf https://sshx.io/get | sh -s run --name "vps-session-$(date +%s)"
+          
