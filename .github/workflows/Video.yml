@@ -1,20 +1,21 @@
-name: VPS
+name: 24/7 VPS Session (sshx)
 
-# Controls when the workflow will run
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'      # Har 6 ghante mein restart (safe)
+  workflow_dispatch:           # Manual start
 
 jobs:
-  build:
+  keep-alive:
     runs-on: ubuntu-latest
+    timeout-minutes: 360       # Maximum 6 hours
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run VPS (sshx session)
-        run: curl -sSf https://sshx.io/get | sh -s run
+      - name: Start Long-running sshx Session
+        run: |
+          echo "🚀 Starting sshx session for next 6 hours..."
+          echo "Connect using the link that will appear below:"
+          curl -sSf https://sshx.io/get | sh -s run --name "vps-session-$(date +%s)"
